@@ -5,13 +5,13 @@ interface Assertion {
 }
 
 declare global {
-  var expect: (actual: unknown) => Assertion;
-  var test: (title: string, callback: () => void) => void;
-  var beforeAll: (callback: () => void) => void;
-  var afterAll: (callback: () => void) => void;
+  var fexpect: (actual: unknown) => Assertion;
+  var ftest: (title: string, callback: () => void) => void;
+  var fbeforeAll: (callback: () => void) => void;
+  var fafterAll: (callback: () => void) => void;
 }
 
-self.expect = function (actual) {
+self.fexpect = function (actual) {
   return {
     toBe(expected) {
       if (actual !== expected) {
@@ -38,7 +38,7 @@ self.expect = function (actual) {
   };
 };
 
-self.test = async function (title, callback) {
+self.ftest = async function (title, callback) {
   try {
     await callback();
     console.log(`Check: ${title}`);
@@ -48,10 +48,10 @@ self.test = async function (title, callback) {
   }
 };
 
-self.beforeAll = function (callback) {
+self.fbeforeAll = function (callback) {
   callback();
 };
 
-self.afterAll = function (callback) {
+self.fafterAll = function (callback) {
   self.addEventListener("beforeunload", callback);
 };
